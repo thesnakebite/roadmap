@@ -24,6 +24,7 @@ return RectorConfig::configure()
         __DIR__.'/bootstrap/cache',
         __DIR__.'/storage',
         __DIR__.'/vendor',
+        __DIR__.'/app/Providers/Filament',
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         ReturnTypeFromStrictTypedCallRector::class,
         ReturnUnionTypeRector::class,
@@ -34,7 +35,8 @@ return RectorConfig::configure()
     ])
     ->withPhpSets()
     ->withSetProviders(LaravelSetProvider::class)
-    ->withComposerBased(laravel: true)
+    // COMENTAMOS esta línea para evitar la colisión de tipos con Filament
+    //  ->withComposerBased(laravel: true)
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
