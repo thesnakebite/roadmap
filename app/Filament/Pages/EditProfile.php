@@ -15,10 +15,11 @@ class EditProfile extends \Filament\Auth\Pages\EditProfile
                 $this->getEmailFormComponent(),
                 TextInput::make('phone')
                     ->tel()
-                    ->minLength(17)
-                    ->maxLength(17)
+                    ->telRegex('/^[+]*[(]{0,1}[+]?[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/')
+                    ->minLength(18)
+                    ->maxLength(18)
                     ->prefixIcon('heroicon-o-phone')
-                    ->mask('(34) 999 99 99 99')
+                    ->mask('(+34) 999 99 99 99')
                     ->required(),
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
