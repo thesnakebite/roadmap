@@ -25,6 +25,7 @@ return RectorConfig::configure()
         __DIR__.'/storage',
         __DIR__.'/vendor',
         __DIR__.'/app/Providers/Filament',
+        __DIR__.'/app/Filament',
         AddClosureVoidReturnTypeWhereNoReturnRector::class,
         ReturnTypeFromStrictTypedCallRector::class,
         ReturnUnionTypeRector::class,

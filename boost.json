@@ -2,5 +2,8 @@
     "agents": [
         "claude_code"
     ],
-    "guidelines": true
+    "guidelines": true,
+    "packages": [
+        "filament/filament"
+    ]
 }
