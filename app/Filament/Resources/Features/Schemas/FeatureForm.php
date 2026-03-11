@@ -5,11 +5,12 @@ namespace App\Filament\Resources\Features\Schemas;
 use App\Enums\Feature\FeatureStatus;
 use App\Enums\Feature\FeatureType;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
+//  use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Slider;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -48,13 +49,6 @@ class FeatureForm
                     ->inline()
                     ->required()
                     ->default(FeatureType::Feature),
-                RichEditor::make('description')
-                    ->columnSpanFull()
-                    ->required(),
-                TextInput::make('effort_in_days')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
                 Slider::make('priority')
                     ->minValue(1)
                     ->maxValue(10)
@@ -63,12 +57,48 @@ class FeatureForm
                     ->fillTrack()
                     ->required()
                     ->default(0),
+                RichEditor::make('description')
+                    ->columnSpanFull()
+                    ->required(),
+                TextInput::make('effort_in_days')
+                    ->required()
+                    ->numeric()
+                    ->afterStateUpdatedJs(<<<'JS'
+                        const isHighCost = $get('is_high_cost');
+                        const effort = $state;
+                        const costPerDay = isHighCost ? 1500 : 1000;
+                        $set('cost', effort * costPerDay);
+                    JS
+                    )
+                    // ->live(onBlur: true)
+                    // ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                    //     $set('cost', $get('is_high_cost') ? 1500 * $state : 1000 * $state);
+                    // })
+                    ->default(0),
                 TextInput::make('cost')
                     ->required()
                     ->numeric()
                     ->default(0.0)
                     ->prefix('$'),
-                DateTimePicker::make('delivered_at'),
+                Toggle::make('is_high_cost')
+                    ->label('Is High Cost')
+                    ->dehydrated(false)
+                    ->afterStateUpdatedJs(<<<'JS'
+                        const isHighCost = $state;
+                        const effort = $get('effort_in_days');
+                        const costPerDay = isHighCost ? 1500 : 1000;
+                        $set('cost', effort * costPerDay);
+                    JS
+                    ),
+                // ->live()
+                // ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                //     if ($state) {
+                //         $set('cost', $get('effort_in_days') * 1500);
+                //     } else {
+                //         $set('cost', $get('effort_in_days') * 1000);
+                //     }
+                // })
+                // DateTimePicker::make('delivered_at'),
             ]);
     }
 }
