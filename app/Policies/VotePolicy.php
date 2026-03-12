@@ -14,7 +14,7 @@ class VotePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class VotePolicy
      */
     public function view(User $user, Vote $vote): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class VotePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -38,7 +38,7 @@ class VotePolicy
      */
     public function update(User $user, Vote $vote): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -46,7 +46,11 @@ class VotePolicy
      */
     public function delete(User $user, Vote $vote): bool
     {
-        return false;
+        if ($vote->user_id === $user->id) {
+            return true;
+        }
+
+        return $user->is_admin;
     }
 
     /**
@@ -54,7 +58,7 @@ class VotePolicy
      */
     public function restore(User $user, Vote $vote): bool
     {
-        return false;
+        return true;
     }
 
     /**
