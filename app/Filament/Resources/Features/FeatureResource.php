@@ -7,6 +7,7 @@ use App\Filament\Resources\Features\Pages\EditFeature;
 use App\Filament\Resources\Features\Pages\ListFeatures;
 use App\Filament\Resources\Features\Pages\ViewFeature;
 use App\Filament\Resources\Features\RelationManagers\CommentsRelationManager;
+use App\Filament\Resources\Features\RelationManagers\VotesRelationManager;
 use App\Filament\Resources\Features\Schemas\FeatureForm;
 use App\Filament\Resources\Features\Schemas\FeatureInfolist;
 use App\Filament\Resources\Features\Tables\FeaturesTable;
@@ -46,6 +47,7 @@ class FeatureResource extends Resource
     {
         return [
             CommentsRelationManager::class,
+            VotesRelationManager::class,
         ];
     }
 

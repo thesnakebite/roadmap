@@ -18,6 +18,9 @@ class CommentsTable
             ->columns([
                 TextColumn::make('user.name')
                     ->searchable(),
+                TextColumn::make('body')
+                    ->limit(50)
+                    ->searchable(),
                 TextColumn::make('feature.name')
                     ->hiddenOn([CommentsRelationManager::class])
                     ->searchable(),
