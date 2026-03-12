@@ -25,4 +25,14 @@ class Feature extends Model
     {
         return $this->hasMany(Milestone::class);
     }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
+    }
 }
