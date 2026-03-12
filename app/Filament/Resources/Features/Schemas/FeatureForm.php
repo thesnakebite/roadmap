@@ -6,6 +6,7 @@ use App\Enums\Feature\FeatureStatus;
 use App\Enums\Feature\FeatureType;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Slider;
@@ -34,6 +35,32 @@ class FeatureForm
                         Tabs\Tab::make('Effort and Cost')
                             ->columns(2)
                             ->schema(self::getEffortAndCostTabSchema()),
+
+                        Tabs\Tab::make('Milestones')
+                            ->columns(1)
+                            ->schema([
+                                Repeater::make('milestones')
+                                    ->nullable()
+                                    ->compact()
+                                    ->relationship('milestones')
+                                    ->defaultItems(0)
+                                    ->reorderable()
+                                    ->maxItems(3)
+                                    ->columns(3)
+                                    ->table([
+                                        Repeater\TableColumn::make('Title*'),
+                                        Repeater\TableColumn::make('Due Date'),
+                                        Repeater\TableColumn::make('Completed'),
+                                    ])
+                                    ->schema([
+                                        TextInput::make('title')
+                                            ->required(),
+                                        DatePicker::make('due_date')
+                                            ->required(),
+                                        Toggle::make('is_completed')
+                                            ->label('Completed'),
+                                    ]),
+                            ]),
                     ]),
             ]);
     }
