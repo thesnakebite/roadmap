@@ -25,10 +25,7 @@ new class extends Component
 
         <div class="space-y-4">
             @foreach ($this->features as $feature)
-                <div class="p-4 border border-gray-500">
-                    <h2 class="font-semibold text-lg">{{ $feature->name }}</h2>
-                    <p class="text-sm text-gray-500">{{ $feature->description }}</p>
-                </div>
+                <x-card :feature="$feature" />
             @endforeach
         </div>
     </section>
